@@ -90,6 +90,8 @@ Route::get('/tasks/{param}', function ($param) use ($taskList) {
 });
 
 // menambahkan query string pada route, dengan menggunakan request()->query
+// contoh: /tasks?search=first akan dikembalikan data 'eat'
+// akan nemapilkan data sesuai dengan key yang diambil dari query string
 Route::get('/tasks', function () use ($taskList) {
     // dd(request()->all()); // menampilkan semua request, termasuk query string
     // ddd(request()->all());
