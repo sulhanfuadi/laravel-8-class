@@ -133,4 +133,12 @@ Route::patch('/tasks/{key}', function ($key) use ($taskList) {
 // apabila digunakan body pada x-www-form-urlencoded, tidak perlu: ditambahkan _method pada key, dan put atau patch pada value
 // apabila digukan form data, perlu: ditambahkan _method pada key, dan put atau patch pada value {atur request method menjadi post}
 
-//
+
+// metode delete digunakan untuk menghapus data
+Route::delete('/tasks/{key}', function ($key) use ($taskList) {
+    unset($taskList[$key]); // menghapus data array, sesuai dengan key yang diambil dari url
+    return response()->json($taskList, 200); // menampilkan data array
+});
+
+// pada postman: atur request method menjadi post, lalu tambahkan _method pada key, dan delete pada value
+// atur url menjadi /tasks/{key}, sesuai dengan key yang ingin dihapus
