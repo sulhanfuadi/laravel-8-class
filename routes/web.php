@@ -127,6 +127,9 @@ Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controlle
 //     return response()->json($taskList, 200); // menampilkan data array
 // });
 
+// refactor code di atas, pindahkan ke file controller, TaskController.php
+Route::post('/tasks', [TaskController::class, 'store']);
+
 // // proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
 // // sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
 
@@ -138,6 +141,9 @@ Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controlle
 //     $taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
 //     return response()->json($taskList, 200); // menampilkan data array
 // });
+
+// refactor code di atas, pindahkan ke file controller, TaskController.php
+Route::patch('/tasks/{key}', [TaskController::class, 'update']);
 
 // // untuk proses ini juga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
 
@@ -151,6 +157,8 @@ Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controlle
 //     unset($taskList[$key]); // menghapus data array, sesuai dengan key yang diambil dari url
 //     return response()->json($taskList, 200); // menampilkan data array
 // });
+
+Route::delete('/tasks/{key}', [TaskController::class, 'destroy']);
 
 // // pada postman: atur request method menjadi post, lalu tambahkan _method pada key, dan delete pada value
 // // atur url menjadi /tasks/{key}, sesuai dengan key yang ingin dihapus
