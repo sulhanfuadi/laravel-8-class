@@ -74,6 +74,10 @@ Route::get('/debug', function () {
 // learn more: https://laravel.com/docs/8.x/routing#available-router-methods 
 // & https://www.restapitutorial.com/introduction/httpmethods#overview
 
+
+// metode get digunakan untuk mengambil data
+// get ditujukan untuk membaca data, tidak mengubah data
+
 $taskList = [
     'first' => 'eat',
     'second' => 'code',
@@ -100,3 +104,16 @@ Route::get('/tasks', function () use ($taskList) {
     }
     return response()->json($taskList, 200);
 });
+
+// metode post digunakan untuk menambahkan data
+// post ditujukan untuk menambahkan data, tidak mengubah data
+
+// menambahkan route baru, /tasks, dengan metode post
+Route::post('/tasks', function () use ($taskList) {
+    // return request()->all(); // menampilkan semua request, termasuk body
+    $taskList[request()->label] = request()->task; // menambahkan data baru ke dalam array
+    return response()->json($taskList, 200); // menampilkan data array
+});
+
+// proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
+// sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php

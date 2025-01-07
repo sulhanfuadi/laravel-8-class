@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        "/tasks", // menambahkan /tasks ke dalam array, agar tidak di verifikasi CSRF
     ];
 }
