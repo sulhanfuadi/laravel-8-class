@@ -80,10 +80,6 @@ $taskList = [
     'third' => 'sleep'
 ];
 
-Route::get('/tasks', function () use ($taskList) {
-    return response()->json($taskList, 200);
-});
-
 // menambahkan parameter pada route, dengan menggunakan {param}
 // parameter ini akan diambil dari url, dan bisa digunakan pada fungsi
 // contoh: /tasks/first, /tasks/second, /tasks/third
@@ -91,4 +87,14 @@ Route::get('/tasks', function () use ($taskList) {
 // contoh: /tasks/first akan menampilkan data 'eat'
 Route::get('/tasks/{param}', function ($param) use ($taskList) {
     return $taskList[$param];
+});
+
+// menambahkan query string pada route, dengan menggunakan request()->query
+Route::get('/tasks', function () use ($taskList) {
+    // dd(request()->all()); // menampilkan semua request, termasuk query string
+    // ddd(request()->all());
+    if (request()->search) { // jika query string search ada
+        return $taskList[request()->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+    }
+    return response()->json($taskList, 200);
 });
