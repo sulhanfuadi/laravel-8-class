@@ -68,3 +68,27 @@ Route::get('/debug', function () {
     ddd($dataArray);
     // ddd(request());
 });
+
+// selain metode get, untuk konfigurasi route, bisa juga menggunakan metode lain
+// available methods: get, post, put, patch, delete, options
+// learn more: https://laravel.com/docs/8.x/routing#available-router-methods 
+// & https://www.restapitutorial.com/introduction/httpmethods#overview
+
+$taskList = [
+    'first' => 'eat',
+    'second' => 'code',
+    'third' => 'sleep'
+];
+
+Route::get('/tasks', function () use ($taskList) {
+    return response()->json($taskList, 200);
+});
+
+// menambahkan parameter pada route, dengan menggunakan {param}
+// parameter ini akan diambil dari url, dan bisa digunakan pada fungsi
+// contoh: /tasks/first, /tasks/second, /tasks/third
+// akan menampilkan data sesuai dengan key yang diambil dari url
+// contoh: /tasks/first akan menampilkan data 'eat'
+Route::get('/tasks/{param}', function ($param) use ($taskList) {
+    return $taskList[$param];
+});
