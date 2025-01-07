@@ -14,5 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         "/tasks", // menambahkan /tasks ke dalam array, agar tidak di verifikasi CSRF
+        "/tasks/*" // menambahkan /tasks/* ke dalam array, agar tidak di verifikasi CSRF, * digunakan untuk wildcard, bisa digunakan untuk semua route yang memiliki /tasks/...
     ];
 }

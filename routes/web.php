@@ -117,3 +117,20 @@ Route::post('/tasks', function () use ($taskList) {
 
 // proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
 // sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
+
+// metode put digunakan untuk mengubah data
+// metode patch digunakan untuk mengubah data, tapi hanya sebagian data
+// put dan patch ditujukan untuk mengubah data, tidak menambahkan data
+// perbedaan put dan patch adalah, put mengubah seluruh data, sedangkan patch mengubah sebagian data
+Route::patch('/tasks/{key}', function ($key) use ($taskList) {
+    $taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
+    return response()->json($taskList, 200); // menampilkan data array
+});
+
+// untuk proses ini juga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
+
+// pada postman:
+// apabila digunakan body pada x-www-form-urlencoded, tidak perlu: ditambahkan _method pada key, dan put atau patch pada value
+// apabila digukan form data, perlu: ditambahkan _method pada key, dan put atau patch pada value {atur request method menjadi post}
+
+//
