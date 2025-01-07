@@ -12,10 +12,19 @@ class TaskController extends Controller
         'third' => 'sleep'
     ];
 
-    public function index()
+    // public function index()
+    // {
+    //     if (request()->search) { // jika query string search ada
+    //         return $this->taskList[request()->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+    //     }
+    //     return response()->json($this->taskList, 200);
+    // }
+
+    // merubah helper request menjadi class request
+    public function index(Request $request)
     {
-        if (request()->search) { // jika query string search ada
-            return $this->taskList[request()->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+        if ($request->search) { // jika query string search ada
+            return $this->taskList[$request->search]; // tampilkan data sesuai dengan key yang diambil dari query string
         }
         return response()->json($this->taskList, 200);
     }
@@ -38,9 +47,9 @@ class TaskController extends Controller
         return response()->json($this->taskList, 200); // menampilkan data array
     }
 
-    public function destroy($param)
+    public function destroy($key)
     {
-        unset($this->taskList[$param]);
+        unset($this->taskList[$key]);
         return response()->json($this->taskList, 200);
     }
 }
