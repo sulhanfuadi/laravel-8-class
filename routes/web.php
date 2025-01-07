@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController; // import HomeController
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// menggunakan controller, untuk mengarahkan ke view welcome, dengan menggunakan HomeController
+Route::get('/', [HomeController::class, 'index']); // menggunakan controller, untuk mengarahkan ke view welcome
 
 // add new route, /about, that will return about view, when user access /about
 Route::get('/about', function () {
