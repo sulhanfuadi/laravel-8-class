@@ -100,6 +100,8 @@ Route::get('/debug', function () {
 //     return $taskList[$param];
 // });
 
+// refactor code di atas, pindahkan ke file controller, TaskController.php
+Route::get('/tasks/{param}', [TaskController::class, 'show']);
 
 // // menambahkan query string pada route, dengan menggunakan request()->query
 // // contoh: /tasks?search=first akan dikembalikan data 'eat'

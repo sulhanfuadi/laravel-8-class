@@ -19,4 +19,9 @@ class TaskController extends Controller
         }
         return response()->json($this->taskList, 200);
     }
+
+    public function show($param)
+    {
+        return $this->taskList[request()->param];
+    }
 }
