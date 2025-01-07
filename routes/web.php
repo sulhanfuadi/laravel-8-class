@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController; // import HomeController
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,67 +83,72 @@ Route::get('/debug', function () {
 // metode get digunakan untuk mengambil data
 // get ditujukan untuk membaca data, tidak mengubah data
 
-$taskList = [
-    'first' => 'eat',
-    'second' => 'code',
-    'third' => 'sleep'
-];
-
-// menambahkan parameter pada route, dengan menggunakan {param}
-// parameter ini akan diambil dari url, dan bisa digunakan pada fungsi
-// contoh: /tasks/first, /tasks/second, /tasks/third
-// akan menampilkan data sesuai dengan key yang diambil dari url
-// contoh: /tasks/first akan menampilkan data 'eat'
-Route::get('/tasks/{param}', function ($param) use ($taskList) {
-    return $taskList[$param];
-});
-
-// menambahkan query string pada route, dengan menggunakan request()->query
-// contoh: /tasks?search=first akan dikembalikan data 'eat'
-// akan nemapilkan data sesuai dengan key yang diambil dari query string
-Route::get('/tasks', function () use ($taskList) {
-    // dd(request()->all()); // menampilkan semua request, termasuk query string
-    // ddd(request()->all());
-    if (request()->search) { // jika query string search ada
-        return $taskList[request()->search]; // tampilkan data sesuai dengan key yang diambil dari query string
-    }
-    return response()->json($taskList, 200);
-});
-
-// metode post digunakan untuk menambahkan data
-// post ditujukan untuk menambahkan data, tidak mengubah data
-
-// menambahkan route baru, /tasks, dengan metode post
-Route::post('/tasks', function () use ($taskList) {
-    // return request()->all(); // menampilkan semua request, termasuk body
-    $taskList[request()->label] = request()->task; // menambahkan data baru ke dalam array
-    return response()->json($taskList, 200); // menampilkan data array
-});
-
-// proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
-// sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
-
-// metode put digunakan untuk mengubah data
-// metode patch digunakan untuk mengubah data, tapi hanya sebagian data
-// put dan patch ditujukan untuk mengubah data, tidak menambahkan data
-// perbedaan put dan patch adalah, put mengubah seluruh data, sedangkan patch mengubah sebagian data
-Route::patch('/tasks/{key}', function ($key) use ($taskList) {
-    $taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
-    return response()->json($taskList, 200); // menampilkan data array
-});
-
-// untuk proses ini juga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
-
-// pada postman:
-// apabila digunakan body pada x-www-form-urlencoded, tidak perlu: ditambahkan _method pada key, dan put atau patch pada value
-// apabila digukan form data, perlu: ditambahkan _method pada key, dan put atau patch pada value {atur request method menjadi post}
+// $taskList = [
+//     'first' => 'eat',
+//     'second' => 'code',
+//     'third' => 'sleep'
+// ];
+// pindahkan ke file controller, TaskController.php
 
 
-// metode delete digunakan untuk menghapus data
-Route::delete('/tasks/{key}', function ($key) use ($taskList) {
-    unset($taskList[$key]); // menghapus data array, sesuai dengan key yang diambil dari url
-    return response()->json($taskList, 200); // menampilkan data array
-});
+// // menambahkan parameter pada route, dengan menggunakan {param}
+// // parameter ini akan diambil dari url, dan bisa digunakan pada fungsi
+// // contoh: /tasks/first, /tasks/second, /tasks/third
+// // akan menampilkan data sesuai dengan key yang diambil dari url
+// // contoh: /tasks/first akan menampilkan data 'eat'
+// Route::get('/tasks/{param}', function ($param) use ($taskList) {
+//     return $taskList[$param];
+// });
 
-// pada postman: atur request method menjadi post, lalu tambahkan _method pada key, dan delete pada value
-// atur url menjadi /tasks/{key}, sesuai dengan key yang ingin dihapus
+
+// // menambahkan query string pada route, dengan menggunakan request()->query
+// // contoh: /tasks?search=first akan dikembalikan data 'eat'
+// // akan nemapilkan data sesuai dengan key yang diambil dari query string
+// Route::get('/tasks', function () use ($taskList) {
+//     // dd(request()->all()); // menampilkan semua request, termasuk query string
+//     // ddd(request()->all());
+//     if (request()->search) { // jika query string search ada
+//         return $taskList[request()->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+//     }
+//     return response()->json($taskList, 200);
+// });
+
+Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controller, untuk mengarahkan ke view welcome
+
+// // metode post digunakan untuk menambahkan data
+// // post ditujukan untuk menambahkan data, tidak mengubah data
+
+// // menambahkan route baru, /tasks, dengan metode post
+// Route::post('/tasks', function () use ($taskList) {
+//     // return request()->all(); // menampilkan semua request, termasuk body
+//     $taskList[request()->label] = request()->task; // menambahkan data baru ke dalam array
+//     return response()->json($taskList, 200); // menampilkan data array
+// });
+
+// // proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
+// // sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
+
+// // metode put digunakan untuk mengubah data
+// // metode patch digunakan untuk mengubah data, tapi hanya sebagian data
+// // put dan patch ditujukan untuk mengubah data, tidak menambahkan data
+// // perbedaan put dan patch adalah, put mengubah seluruh data, sedangkan patch mengubah sebagian data
+// Route::patch('/tasks/{key}', function ($key) use ($taskList) {
+//     $taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
+//     return response()->json($taskList, 200); // menampilkan data array
+// });
+
+// // untuk proses ini juga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
+
+// // pada postman:
+// // apabila digunakan body pada x-www-form-urlencoded, tidak perlu: ditambahkan _method pada key, dan put atau patch pada value
+// // apabila digukan form data, perlu: ditambahkan _method pada key, dan put atau patch pada value {atur request method menjadi post}
+
+
+// // metode delete digunakan untuk menghapus data
+// Route::delete('/tasks/{key}', function ($key) use ($taskList) {
+//     unset($taskList[$key]); // menghapus data array, sesuai dengan key yang diambil dari url
+//     return response()->json($taskList, 200); // menampilkan data array
+// });
+
+// // pada postman: atur request method menjadi post, lalu tambahkan _method pada key, dan delete pada value
+// // atur url menjadi /tasks/{key}, sesuai dengan key yang ingin dihapus
