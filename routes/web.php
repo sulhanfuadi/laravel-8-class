@@ -42,3 +42,29 @@ Route::get('/hello', function () {
     // ajaibnya, laravel akan mengubah array menjadi json secara otomatis
     // return $dataArray;
 });
+
+// praktik fungsi debugging di laravel untuk menampilkan response
+// membuat route baru, /debug , untuk menampilkan data array dan request
+Route::get('/debug', function () {
+    $dataArray = [
+        'message' => 'Hello World'
+    ];
+
+    // dd() adalah helper function untuk menampilkan data array
+    // dd adalah singkatan dari dump and die
+    // dump adalah fungsi untuk menampilkan data array
+    // die adalah fungsi untuk menghentikan proses selanjutnya
+
+    // dd($dataArray); // akan menampilkan data array
+    // dd(request());
+
+    // atau bisa juga menggunakan helper function ddd()
+    // ddd() adalah helper function untuk menampilkan data array
+    // ddd adalah singkatan dari dump, die, dan debug
+    // dump adalah fungsi untuk menampilkan data array
+    // die adalah fungsi untuk menghentikan proses selanjutnya
+    // debug adalah fungsi untuk menampilkan data array dan request
+
+    ddd($dataArray);
+    // ddd(request());
+});
