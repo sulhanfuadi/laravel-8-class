@@ -59,15 +59,33 @@ class TaskController extends Controller
     //     return $tasks; // menampilkan data yang diambil dari database
     // }
 
+    // menampilkan data menggunakan view, dengan model Task, dan query string search
+    // public function index(Request $request)
+    // {
+    //     if ($request->search) { // jika query string search ada
+    //         $tasks = Task::where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
+    //             ->get();
+    //         return $tasks;
+    //     }
+
+    //     $tasks = Task::all(); // mengambil data dari database dengan model Task
+    //     return view("task.index", [ // menampilkan data yang diambil dari database, dengan view task.index
+    //         "data" => $tasks
+    //     ]);
+    // }
+
+    // 
     public function index(Request $request)
     {
         if ($request->search) { // jika query string search ada
             $tasks = Task::where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
-                ->get();
-            return $tasks;
+                ->paginate(4); // menampilkan data dengan pagination, dengan jumlah data 4
+            return view("task.index", [ // menampilkan data yang diambil dari database, dengan view task.index
+                "data" => $tasks
+            ]);
         }
 
-        $tasks = Task::all(); // mengambil data dari database dengan model Task
+        $tasks = Task::paginate(4); // mengambil data dari database dengan model Task
         return view("task.index", [ // menampilkan data yang diambil dari database, dengan view task.index
             "data" => $tasks
         ]);
