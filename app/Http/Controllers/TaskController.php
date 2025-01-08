@@ -22,12 +22,27 @@ class TaskController extends Controller
     // }
 
     // merubah helper request menjadi class request
+    // public function index(Request $request)
+    // {
+    //     if ($request->search) { // jika query string search ada
+    //         return $this->taskList[$request->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+    //     }
+    //     return response()->json($this->taskList, 200);
+    // }
+
+    // method index digunakan untuk menampilkan seluruh data yang ada di database
+
     public function index(Request $request)
     {
         if ($request->search) { // jika query string search ada
-            return $this->taskList[$request->search]; // tampilkan data sesuai dengan key yang diambil dari query string
+            $tasks = DB::table('tasks')
+                ->where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
+                ->get();
+            return $tasks;
         }
-        return response()->json($this->taskList, 200);
+
+        $tasks = DB::table('tasks')->get(); // mengambil data dari database
+        return $tasks; // menampilkan data yang diambil dari database
     }
 
     // public function store()
@@ -47,10 +62,19 @@ class TaskController extends Controller
         return 'success'; // menampilkan pesan success, jika berhasil
     }
 
-    public function show($param)
+    // public function show($param)
+    // {
+    //     // return $param;
+    //     return $this->taskList[request()->param];
+    // }
+
+    // menampilkan data berdasarkan id, menggunakan query builder
+    public function show($id)
     {
-        // return $param;
-        return $this->taskList[request()->param];
+        $task = DB::table('tasks')
+            ->where('id', $id)
+            ->first(); // mencari data berdasarkan id
+        ddd($task); // menampilkan data yang diambil dari database
     }
 
     public function update($key)
