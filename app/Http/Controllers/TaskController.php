@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task; // import model Task
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,16 +33,29 @@ class TaskController extends Controller
 
     // method index digunakan untuk menampilkan seluruh data yang ada di database
 
+    // public function index(Request $request)
+    // {
+    //     if ($request->search) { // jika query string search ada
+    //         $tasks = DB::table('tasks')
+    //             ->where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
+    //             ->get();
+    //         return $tasks;
+    //     }
+
+    //     $tasks = DB::table('tasks')->get(); // mengambil data dari database
+    //     return $tasks; // menampilkan data yang diambil dari database
+    // }
+
+    // menampilkan data menggunakan model Task
     public function index(Request $request)
     {
         if ($request->search) { // jika query string search ada
-            $tasks = DB::table('tasks')
-                ->where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
+            $tasks = Task::where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
                 ->get();
             return $tasks;
         }
 
-        $tasks = DB::table('tasks')->get(); // mengambil data dari database
+        $tasks = Task::all(); // mengambil data dari database dengan model Task
         return $tasks; // menampilkan data yang diambil dari database
     }
 
@@ -52,9 +66,19 @@ class TaskController extends Controller
     // }
 
     // menambah data menggunakan query builder
+    // public function store()
+    // {
+    //     DB::table('tasks')->insert([
+    //         'task' => request()->task, // mengambil data dari body request, dengan key task
+    //         'user' => request()->user,
+    //     ]);
+
+    //     return 'success'; // menampilkan pesan success, jika berhasil
+    // }
+
     public function store()
     {
-        DB::table('tasks')->insert([
+        Task::create([ // membuat data baru dengan model Task, menggunakan method create, karena data hanya satu
             'task' => request()->task, // mengambil data dari body request, dengan key task
             'user' => request()->user,
         ]);
@@ -69,12 +93,18 @@ class TaskController extends Controller
     // }
 
     // menampilkan data berdasarkan id, menggunakan query builder
+    // public function show($id)
+    // {
+    //     $task = DB::table('tasks')
+    //         ->where('id', $id)
+    //         ->first(); // mencari data berdasarkan id
+    //     ddd($task); // menampilkan data yang diambil dari database
+    // }
+
     public function show($id)
     {
-        $task = DB::table('tasks')
-            ->where('id', $id)
-            ->first(); // mencari data berdasarkan id
-        ddd($task); // menampilkan data yang diambil dari database
+        $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
+        return $task; // menampilkan data yang diambil dari database
     }
 
     // public function update($key)
@@ -85,13 +115,14 @@ class TaskController extends Controller
 
     public function update($id)
     {
-        $task = DB::table('tasks')
-            ->where('id', $id)
-            ->update([
-                'task' => request()->task, // mengambil data dari body request, dengan key task
-                'user' => request()->user,
-            ]);
-        return 'success';
+        $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
+
+        $task->update([ // mengubah data yang ditemukan, menggunakan method update
+            'task' => request()->task, // mengambil data dari body request, dengan key task
+            'user' => request()->user,
+        ]);
+
+        return $task; // menampilkan data yang telah diubah, dari database
     }
 
     // public function destroy($key)
@@ -102,9 +133,8 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
-        DB::table('tasks')
-            ->where('id', $id)
-            ->delete(); // menghapus data berdasarkan id
+        $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
+        $task->delete(); // menghapus data yang ditemukan, menggunakan method delete
         return 'success';
     }
 }
