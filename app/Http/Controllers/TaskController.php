@@ -94,9 +94,17 @@ class TaskController extends Controller
         return 'success';
     }
 
-    public function destroy($key)
+    // public function destroy($key)
+    // {
+    //     unset($this->taskList[$key]);
+    //     return response()->json($this->taskList, 200);
+    // }
+
+    public function destroy($id)
     {
-        unset($this->taskList[$key]);
-        return response()->json($this->taskList, 200);
+        DB::table('tasks')
+            ->where('id', $id)
+            ->delete(); // menghapus data berdasarkan id
+        return 'success';
     }
 }

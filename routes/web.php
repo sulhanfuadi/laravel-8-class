@@ -163,7 +163,8 @@ Route::patch('/tasks/{id}', [TaskController::class, 'update']);
 //     return response()->json($taskList, 200); // menampilkan data array
 // });
 
-Route::delete('/tasks/{key}', [TaskController::class, 'destroy']);
+// Route::delete('/tasks/{key}', [TaskController::class, 'destroy']);
+Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 
 // // pada postman: atur request method menjadi post, lalu tambahkan _method pada key, dan delete pada value
 // // atur url menjadi /tasks/{key}, sesuai dengan key yang ingin dihapus
