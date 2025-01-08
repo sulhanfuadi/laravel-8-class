@@ -108,6 +108,21 @@ class TaskController extends Controller
     //     return 'success'; // menampilkan pesan success, jika berhasil
     // }
 
+    // public function store()
+    // {
+    //     Task::create([ // membuat data baru dengan model Task, menggunakan method create, karena data hanya satu
+    //         'task' => request()->task, // mengambil data dari body request, dengan key task
+    //         'user' => request()->user,
+    //     ]);
+
+    //     return 'success'; // menampilkan pesan success, jika berhasil
+    // }
+
+    public function create() // menampilkan halaman create
+    {
+        return view('task.create'); // menampilkan view task.create
+    }
+
     public function store()
     {
         Task::create([ // membuat data baru dengan model Task, menggunakan method create, karena data hanya satu
@@ -115,7 +130,7 @@ class TaskController extends Controller
             'user' => request()->user,
         ]);
 
-        return 'success'; // menampilkan pesan success, jika berhasil
+        return redirect('/tasks'); // mengarahkan ke halaman tasks
     }
 
     // public function show($param)
