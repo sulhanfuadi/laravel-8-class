@@ -77,10 +77,21 @@ class TaskController extends Controller
         ddd($task); // menampilkan data yang diambil dari database
     }
 
-    public function update($key)
+    // public function update($key)
+    // {
+    //     $this->taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
+    //     return response()->json($this->taskList, 200); // menampilkan data array
+    // }
+
+    public function update($id)
     {
-        $this->taskList[$key] = request()->task; // mengubah data array, sesuai dengan key yang diambil dari url
-        return response()->json($this->taskList, 200); // menampilkan data array
+        $task = DB::table('tasks')
+            ->where('id', $id)
+            ->update([
+                'task' => request()->task, // mengambil data dari body request, dengan key task
+                'user' => request()->user,
+            ]);
+        return 'success';
     }
 
     public function destroy($key)

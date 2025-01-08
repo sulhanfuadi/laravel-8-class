@@ -146,7 +146,9 @@ Route::post('/tasks', [TaskController::class, 'store']);
 // });
 
 // refactor code di atas, pindahkan ke file controller, TaskController.php
-Route::patch('/tasks/{key}', [TaskController::class, 'update']);
+// Route::patch('/tasks/{key}', [TaskController::class, 'update']);
+
+Route::patch('/tasks/{id}', [TaskController::class, 'update']);
 
 // // untuk proses ini juga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
 
