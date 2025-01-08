@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -29,10 +30,21 @@ class TaskController extends Controller
         return response()->json($this->taskList, 200);
     }
 
+    // public function store()
+    // {
+    //     $this->taskList[request()->label] = request()->task; // menambahkan data baru ke dalam array
+    //     return response()->json($this->taskList, 200); // menampilkan data array
+    // }
+
+    // menambah data menggunakan query builder
     public function store()
     {
-        $this->taskList[request()->label] = request()->task; // menambahkan data baru ke dalam array
-        return response()->json($this->taskList, 200); // menampilkan data array
+        DB::table('tasks')->insert([
+            'task' => request()->task, // mengambil data dari body request, dengan key task
+            'user' => request()->user,
+        ]);
+
+        return 'success'; // menampilkan pesan success, jika berhasil
     }
 
     public function show($param)
