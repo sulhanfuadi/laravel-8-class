@@ -123,8 +123,13 @@ class TaskController extends Controller
         return view("task.create"); // menampilkan view task.create
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $request->validate([ // validasi data yang diinputkan
+            'task' => ['required'], // data task wajib diisi
+            'user' => ['required'], // data user wajib diisi
+        ]);
+
         Task::create([ // membuat data baru dengan model Task, menggunakan method create, karena data hanya satu
             'task' => request()->task, // mengambil data dari body request, dengan key task
             'user' => request()->user,
