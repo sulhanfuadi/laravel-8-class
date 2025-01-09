@@ -118,7 +118,9 @@ Route::get('/tasks/{id}', [TaskController::class, 'show']);
 //     return response()->json($taskList, 200);
 // });
 
-Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controller, untuk mengarahkan ke view welcome
+// Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controller, untuk mengarahkan ke view welcome
+
+Route::get('/tasks', [TaskController::class, 'index'])->middleware('is_admin'); // menambahkan middleware admin, yang akan dicek apakah role user adalah admin atau bukan
 
 // // metode post digunakan untuk menambahkan data
 // // post ditujukan untuk menambahkan data, tidak mengubah data
