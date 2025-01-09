@@ -133,6 +133,13 @@ class TaskController extends Controller
         return redirect('/tasks'); // mengarahkan ke halaman tasks
     }
 
+    public function edit($id)
+    {
+        $task = Task::find($id);
+        return view('task.edit', compact('task')); // menampilkan view task.edit, dengan data task
+        // compact digunakan untuk mengirim data task ke view task.edit
+    }
+
     // public function show($param)
     // {
     //     // return $param;
@@ -160,6 +167,18 @@ class TaskController extends Controller
     //     return response()->json($this->taskList, 200); // menampilkan data array
     // }
 
+    // public function update($id)
+    // {
+    //     $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
+
+    //     $task->update([ // mengubah data yang ditemukan, menggunakan method update
+    //         'task' => request()->task, // mengambil data dari body request, dengan key task
+    //         'user' => request()->user,
+    //     ]);
+
+    //     return $task; // menampilkan data yang telah diubah, dari database
+    // }
+
     public function update($id)
     {
         $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
@@ -169,7 +188,7 @@ class TaskController extends Controller
             'user' => request()->user,
         ]);
 
-        return $task; // menampilkan data yang telah diubah, dari database
+        return redirect('/tasks'); // mengarahkan ke halaman tasks
     }
 
     // public function destroy($key)
@@ -182,6 +201,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
         $task->delete(); // menghapus data yang ditemukan, menggunakan method delete
-        return 'success';
+        // return 'success';
+        return redirect('/tasks'); // mengarahkan ke halaman tasks
     }
 }

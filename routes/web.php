@@ -130,12 +130,14 @@ Route::get('/tasks', [TaskController::class, 'index']); // menggunakan controlle
 //     return response()->json($taskList, 200); // menampilkan data array
 // });
 
-Route::get('tasks/create', [TaskController::class, 'create']);
+Route::get('task/create', [TaskController::class, 'create']);
 
 // refactor code di atas, pindahkan ke file controller, TaskController.php
 // Route::post('/tasks/create', [TaskController::class, 'store']);
 
 Route::post('/tasks', [TaskController::class, 'store']);
+
+Route::get('/tasks/{id}/edit', [TaskController::class, 'edit']);
 
 // // proses di atas biasanya di laravel, akan mengaktifkaan CSRF token
 // // sehingga perlu menonaktifkan CSRF token untuk route /tasks, @ app/Http/Middleware/VerifyCsrfToken.php
