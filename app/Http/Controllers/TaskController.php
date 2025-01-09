@@ -9,11 +9,17 @@ use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
-    private $taskList = [
-        'first' => 'eat',
-        'second' => 'code',
-        'third' => 'sleep'
-    ];
+    // private $taskList = [
+    //     'first' => 'eat',
+    //     'second' => 'code',
+    //     'third' => 'sleep'
+    // ];
+
+    public function __construct()
+    {
+        $this->middleware("auth"); // menambahkan middleware auth, yang akan dicek apakah user sudah login atau belum, jika belum akan diarahkan ke halaman login
+        $this->middleware("is_admin");
+    }
 
     // public function index()
     // {

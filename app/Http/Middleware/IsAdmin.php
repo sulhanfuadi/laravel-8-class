@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
@@ -16,7 +17,8 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->role || $request->role != "admin") { // Jika role tidak ada atau role bukan is_admin, maka akan diarahkan ke halaman utama
+        $user = Auth::user(); // mengambil data user yang sedang login
+        if (!$user->role || $user->role != "admin") { // Jika role tidak ada atau role bukan is_admin, maka akan diarahkan ke halaman utama
             return redirect('/');
         }
 
