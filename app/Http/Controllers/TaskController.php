@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest; // import class TaskRequest, yang ada di folder Requests
 use App\Models\Task; // import model Task
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +76,7 @@ class TaskController extends Controller
     // }
 
     // 
-    public function index(Request $request)
+    public function index(Task $request)
     {
         if ($request->search) { // jika query string search ada
             $tasks = Task::where('task', 'LIKE', "%$request->search%") // mencari data yang mengandung string yang diinputkan, pada kolom task 
@@ -123,16 +124,11 @@ class TaskController extends Controller
         return view("task.create"); // menampilkan view task.create
     }
 
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $request->validate([ // validasi data yang diinputkan
-            'task' => ['required'], // data task wajib diisi
-            'user' => ['required'], // data user wajib diisi
-        ]);
-
         Task::create([ // membuat data baru dengan model Task, menggunakan method create, karena data hanya satu
-            'task' => request()->task, // mengambil data dari body request, dengan key task
-            'user' => request()->user,
+            'task' => $request->task, // mengambil data dari body request, dengan key task
+            'user' => $request->user,
         ]);
 
         return redirect('/tasks'); // mengarahkan ke halaman tasks
@@ -184,13 +180,13 @@ class TaskController extends Controller
     //     return $task; // menampilkan data yang telah diubah, dari database
     // }
 
-    public function update($id)
+    public function update(TaskRequest $request, $id)
     {
         $task = Task::find($id); // mencari data berdasarkan id, menggunakan model Task
 
         $task->update([ // mengubah data yang ditemukan, menggunakan method update
-            'task' => request()->task, // mengambil data dari body request, dengan key task
-            'user' => request()->user,
+            'task' => $request->task, // mengambil data dari body request, dengan key task
+            'user' => $request->user,
         ]);
 
         return redirect('/tasks'); // mengarahkan ke halaman tasks

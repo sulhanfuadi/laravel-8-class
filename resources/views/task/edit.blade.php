@@ -8,7 +8,7 @@
                     @csrf @method('PATCH')
                     <div class="mb-3">
                         <label for="" class="form-label">User</label>
-                        <input name="user" type="text" class="form-control" value="{{ old('user', $task->user) }}">
+                        <input name="user" type="text" class="form-control" value="{{ old('user', $task->user) }}"> <!-- Add a value attribute to keep the user input -->
                         @error('user')
                             <span class="text-danger">
                                 {{ $message }}

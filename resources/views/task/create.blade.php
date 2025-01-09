@@ -8,10 +8,10 @@
                     @csrf
                     <div class="mb-3">
                         <label for="" class="form-label">User</label>
-                        <input type="text" name="user" class="form-control" value="{{ old('user') }}">
-                        @error('user')
-                            <span class="text-danger">
-                                {{ $message }}
+                        <input type="text" name="user" class="form-control" value="{{ old('user') }}"> <!-- Add a value attribute to keep the user input -->
+                        @error('user') <!-- Display the error message -->
+                            <span class="text-danger"> <!-- Add a text-danger class to make the text red -->
+                                {{ $message }} <!-- Display the error message -->
                             </span>
                         @enderror
                     </div>
