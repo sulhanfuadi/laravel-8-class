@@ -43,11 +43,11 @@ Follow these steps to set up the project locally:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/sulhanfuadi/tasks-management-app.git
+    git clone https://github.com/sulhanfuadi/laravel-8-class.git
     ```
 2. Navigate to the project folder:
     ```bash
-    cd tasks-management-app
+    cd laravel-8-class
     ```
 3. Install dependencies:
     ```bash
