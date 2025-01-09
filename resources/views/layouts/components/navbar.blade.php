@@ -5,9 +5,18 @@
         <li><a href="{{ url('tasks/') }}" class="nav-link px-2 text-white">Home</a></li>
       </ul>
       <div class="text-end">
-        <button type="button" class="btn btn-outline-light me-2">Login</button>
-        {{-- <button type="button" class="btn btn-warning">Sign-up</button> --}}
-        <a href="{{ url('register') }}" class="btn btn-warning">Sign-up</a>
+        <!-- Authentication Links -->
+        @guest
+          <a href="{{ url('login') }}" type="button" class="btn btn-outline-light me-2">Login</a>
+          <a href="{{ url('register') }}" type="button" class="btn btn-warning">Sign-up</a>
+        @else
+          <a class="btn btn-outline-light me-2">Hi {{ Auth::user()->name }}!</a>
+          <a href="{{ url('logout') }}" type="button" class="btn btn-warning" 
+          onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+          <form action="{{ route('logout') }}" id="logout-form" method="POST">
+            @csrf
+          </form>
+          @endguest
       </div>
     </div>
   </div>
