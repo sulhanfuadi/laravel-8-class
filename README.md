@@ -43,11 +43,11 @@ Follow these steps to set up the project locally:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/sulhanfuadi/laravel-8-class.git
+    git clone https://github.com/sulhanfuadi/tasks-management-app.git
     ```
 2. Navigate to the project folder:
     ```bash
-    cd laravel-8-class
+    cd tasks-management-app
     ```
 3. Install dependencies:
     ```bash
@@ -56,6 +56,9 @@ Follow these steps to set up the project locally:
     npm run dev
     ```
 4. Configure the `.env` file:
+
+    - Duplicate `.env.example` and rename it to `.env`.
+    - Update the database credentials to match your local setup.
 
 5. Run migrations to set up the database:
 
