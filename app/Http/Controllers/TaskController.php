@@ -18,6 +18,7 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware("auth"); // menambahkan middleware auth, yang akan dicek apakah user sudah login atau belum, jika belum akan diarahkan ke halaman login
+        $this->middleware("verified");
         $this->middleware("is_admin");
     }
 
