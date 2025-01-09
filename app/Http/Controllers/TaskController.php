@@ -120,7 +120,7 @@ class TaskController extends Controller
 
     public function create() // menampilkan halaman create
     {
-        return view('task.create'); // menampilkan view task.create
+        return view("task.create"); // menampilkan view task.create
     }
 
     public function store()
